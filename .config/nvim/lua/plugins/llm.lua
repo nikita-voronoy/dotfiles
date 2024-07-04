@@ -1,0 +1,44 @@
+return {
+	-- {
+	-- 	"huggingface/llm.nvim",
+	-- 	config = function()
+	-- 		local llm = require("llm")
+	-- 		llm.setup({
+	-- 			api_token = nil, -- Add your API token here if required
+	-- 			model = "deepseek-coder-v2", -- the model ID for deepseek-coder-v2
+	-- 			backend = "ollama", -- use ollama backend
+	-- 			url = "http://127.0.0.1:11434", -- the HTTP URL of the backend if needed
+	-- 			tokens_to_clear = { "" }, -- tokens to remove from the model's output
+	-- 			request_body = {
+	-- 				parameters = {
+	-- 					max_new_tokens = 60,
+	-- 					temperature = 0.2,
+	-- 					top_p = 0.95,
+	-- 				},
+	-- 			},
+	-- 			fim = {
+	-- 				enabled = true,
+	-- 				prefix = "<fim_prefix>",
+	-- 				middle = "<fim_middle>",
+	-- 				suffix = "<fim_suffix>",
+	-- 			},
+	-- 			debounce_ms = 150,
+	-- 			accept_keymap = "<Tab>",
+	-- 			dismiss_keymap = "<S-Tab>",
+	-- 			tls_skip_verify_insecure = false,
+	-- 			lsp = {
+	-- 				bin_path = nil,
+	-- 				host = nil,
+	-- 				port = nil,
+	-- 				cmd_env = nil,
+	-- 				version = "0.5.3",
+	-- 			},
+	-- 			tokenizer = nil,
+	-- 			context_window = 1024,
+	-- 			enable_suggestions_on_startup = true,
+	-- 			enable_suggestions_on_files = "*",
+	-- 			disable_url_path_completion = false,
+	-- 		})
+	-- 	end,
+	-- },
+}
