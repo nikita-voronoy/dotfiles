@@ -7,9 +7,9 @@ return {
                 lualine_c = {
                     function()
                         return require('lsp-progress').progress(
-                            {
-                                max_size = 55
-                            }
+                        -- {
+                        --     max_size = 55
+                        -- }
                         )
                     end,
                 },

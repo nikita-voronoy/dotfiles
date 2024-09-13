@@ -16,7 +16,8 @@ return {
         'hrsh7th/nvim-cmp',
         event = 'InsertEnter',
         dependencies = {
-            { 'L3MON4D3/LuaSnip' },
+            { "rafamadriz/friendly-snippets" },
+            { "hrsh7th/cmp-path" }
         },
         config = function()
             local cmp = require('cmp')
@@ -24,8 +25,9 @@ return {
             cmp.setup({
                 sources = {
                     { name = 'nvim_lsp' },
-                    -- { name = 'LuaSnip' },
-                    -- { name = 'buffer' }
+                    { name = 'snippets' },
+                    { name = 'path' },
+                    { name = 'buffer' }
                 },
                 mapping = cmp.mapping.preset.insert({
                     ['<C-Space>'] = cmp.mapping.complete(),
@@ -34,6 +36,15 @@ return {
                         if vim.snippet.active({ direction = 1 }) then
                             vim.schedule(function()
                                 vim.snippet.jump(1)
+                            end)
+                        else
+                            fallback()
+                        end
+                    end, { "i", "s" }),
+                    ["S-<Tab>"] = cmp.mapping(function(fallback)
+                        if vim.snippet.active({ direction = -1 }) then
+                            vim.schedule(function()
+                                vim.snippet.jump(-1)
                             end)
                         else
                             fallback()
@@ -67,7 +78,7 @@ return {
 
             -- lsp_attach is where you enable features that only work
             -- if there is a language server active in the file
-            local lsp_attach = function(client, bufnr)
+            local lsp_attach = function(_, bufnr)
                 local opts = { buffer = bufnr }
                 require('lazydev').find_workspace(bufnr)
                 lsp_zero.buffer_autoformat()

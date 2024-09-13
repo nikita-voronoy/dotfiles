@@ -1,12 +1,15 @@
+-- Setup leader key
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+-- Set the numbers and emergency options
 vim.opt.number = true
 vim.opt.clipboard = "unnamedplus"
 vim.opt.relativenumber = true
 vim.opt.undofile = true
 vim.opt.pumheight = 8
 
+-- Optional options, some options related to LSP servers
 vim.o.pumwidth = 40
 vim.o.ignorecase = true
 vim.o.showmatch = true
@@ -14,14 +17,12 @@ vim.o.scrolloff = 10
 vim.o.shiftwidth = 4
 vim.o.expandtab = true
 
--- Rust
+--#region Rust
+-- Rust: rustaceanvim plugin setup
 vim.g.rustaceanvim = {
     server = {
         settings = {
             ["rust-analyzer"] = {
-                -- imports = {
-                --     preferPrelude = true
-                -- },
                 checkOnSave = {
                     allFeatures = true,
                     command = "clippy",
@@ -31,61 +32,15 @@ vim.g.rustaceanvim = {
                         "-Dclippy::all",
                     },
                 },
-                -- completion = {
-                --     autoimport = {
-                --         enable = true,
-                --     },
-                --     postfix = {
-                --         enable = true,
-                --     },
-                -- },
-                -- lens = {
-                --     enable = true,
-                --     references = {
-                --         enable = true,
-                --     },
-                -- },
-                -- inlayHints = {
-                --     bindingModeHints = {
-                --         enable = true,
-                --     },
-                --     chainingHints = {
-                --         enable = true,
-                --     },
-                --     closingBraceHints = {
-                --         enable = true,
-                --         minLines = 25,
-                --     },
-                --     closureReturnTypeHints = {
-                --         enable = true,
-                --     },
-                --     closureCaptureHints = {
-                --         enable = true
-                --     },
-                --     -- lifetimeElisionHints = {
-                --     --     enable = true,
-                --     --     useParameterNames = true,
-                --     -- },
-                --     -- maxLength = 25,
-                --     parameterHints = {
-                --         enable = true,
-                --     },
-                --     -- reborrowHints = {
-                --     --     enable = "always",
-                --     -- },
-                --     renderColons = true,
-                --     typeHints = {
-                --         enable = true,
-                --         hideClosureInitialization = true,
-                --         hideNamedConstructor = true,
-                --     },
-                -- },
             },
         },
     },
 }
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { noremap = true, silent = true })
+--#endregion
+
+-- Move line like IDE Shift+<KJ>
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { noremap = true, silent = true })
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { noremap = true, silent = true })
 -- CTRL+S
 vim.keymap.set("n", "<C-s>", ":w<CR>", { noremap = true, silent = true })
 vim.keymap.set("i", "<C-s>", "<Esc>:w<CR>", { noremap = true, silent = true })
@@ -95,7 +50,7 @@ vim.keymap.set("n", "<leader>w", "", { noremap = true, silent = false, desc = "W
 vim.keymap.set("n", "<leader>ws", "<Cmd>split<CR>", { noremap = true, silent = false, desc = "Split by -" })
 vim.keymap.set("n", "<leader>wv", "<Cmd>vsplit<CR>", { noremap = true, silent = false, desc = "Split by |" })
 
--- Disable arrow keys (including with Shift)
+-- Disable arrow keys (including with Shift) I hate this behavior.
 local modes = { "n", "i", "v" }
 local arrows = { "Up", "Down", "Left", "Right" }
 
