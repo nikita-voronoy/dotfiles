@@ -16,6 +16,7 @@ vim.o.showmatch = true
 vim.o.scrolloff = 10
 vim.o.shiftwidth = 4
 vim.o.expandtab = true
+vim.o.fileformat = 'unix'
 
 --#region Rust
 -- Rust: rustaceanvim plugin setup
@@ -37,6 +38,12 @@ vim.g.rustaceanvim = {
     },
 }
 --#endregion
+
+
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+    pattern = "*",
+    command = "set fileformat=unix"
+})
 
 -- Move line like IDE Shift+<KJ>
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { noremap = true, silent = true })
