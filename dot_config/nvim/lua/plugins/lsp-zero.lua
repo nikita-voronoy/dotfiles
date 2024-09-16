@@ -11,21 +11,32 @@ return {
         config = true,
     },
 
-    -- Autocompletion
     {
         'hrsh7th/nvim-cmp',
         event = 'InsertEnter',
         dependencies = {
             { "rafamadriz/friendly-snippets" },
-            { "hrsh7th/cmp-path" }
+            { "hrsh7th/cmp-path" },
+            { "L3MON4D3/LuaSnip" },
+            { "saadparwaiz1/cmp_luasnip" },
         },
         config = function()
             local cmp = require('cmp')
+            local luasnip = require('luasnip')
+
+            -- local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+            --
+            -- cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
 
             cmp.setup({
+                snippet = {
+                    expand = function(args)
+                        luasnip.lsp_expand(args.body)
+                    end,
+                },
                 sources = {
                     { name = 'nvim_lsp' },
-                    { name = 'snippets' },
+                    { name = 'luasnip' },
                     { name = 'path' },
                     { name = 'buffer' }
                 },
@@ -33,19 +44,15 @@ return {
                     ['<C-Space>'] = cmp.mapping.complete(),
                     ['<CR>'] = cmp.mapping.confirm({ select = true }),
                     ["<Tab>"] = cmp.mapping(function(fallback)
-                        if vim.snippet.active({ direction = 1 }) then
-                            vim.schedule(function()
-                                vim.snippet.jump(1)
-                            end)
+                        if luasnip.jumpable(1) then
+                            luasnip.jump(1)
                         else
                             fallback()
                         end
                     end, { "i", "s" }),
-                    ["S-<Tab>"] = cmp.mapping(function(fallback)
-                        if vim.snippet.active({ direction = -1 }) then
-                            vim.schedule(function()
-                                vim.snippet.jump(-1)
-                            end)
+                    ["<S-Tab>"] = cmp.mapping(function(fallback)
+                        if luasnip.jumpable(-1) then
+                            luasnip.jump(-1)
                         else
                             fallback()
                         end
@@ -53,16 +60,22 @@ return {
                     ['<C-u>'] = cmp.mapping.scroll_docs(-4),
                     ['<C-d>'] = cmp.mapping.scroll_docs(4),
                 }),
-                snippet = {
-                    expand = function(args)
-                        vim.snippet.expand(args.body)
-                    end,
-                },
             })
         end
     },
 
-    -- LSP
+    {
+        'L3MON4D3/LuaSnip',
+        lazy = true,
+        config = function()
+            require("luasnip.loaders.from_vscode").lazy_load()
+        end
+    },
+    {
+        "rafamadriz/friendly-snippets",
+        lazy = true,
+    },
+
     {
         'neovim/nvim-lspconfig',
         cmd = { 'LspInfo', 'LspInstall', 'LspStart' },
@@ -76,22 +89,19 @@ return {
             local lsp_zero = require('lsp-zero')
             local telescope = require("telescope.builtin")
 
-            -- lsp_attach is where you enable features that only work
-            -- if there is a language server active in the file
             local lsp_attach = function(_, bufnr)
                 local opts = { buffer = bufnr }
                 require('lazydev').find_workspace(bufnr)
                 lsp_zero.buffer_autoformat()
 
-                vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-                vim.keymap.set('n', 'gd', telescope.lsp_definitions, opts)
-                vim.keymap.set('n', 'gD', telescope.lsp_type_definitions, opts)
-                vim.keymap.set('n', 'gi', telescope.lsp_implementations, opts)
-                vim.keymap.set('n', 'go', telescope.lsp_type_definitions, opts)
-                vim.keymap.set('n', 'gr', telescope.lsp_references, opts)
-                vim.keymap.set('n', 'gs', vim.lsp.buf.signature_help, opts)
-                vim.keymap.set('n', 'cr', vim.lsp.buf.rename, opts)
-                vim.keymap.set('n', 'ca', vim.lsp.buf.code_action, opts)
+                vim.keymap.set('n', '<leader>gd', telescope.lsp_definitions, opts)
+                vim.keymap.set('n', '<leader>gD', telescope.lsp_type_definitions, opts)
+                vim.keymap.set('n', '<leader>gi', telescope.lsp_implementations, opts)
+                vim.keymap.set('n', '<leader>go', telescope.lsp_type_definitions, opts)
+                vim.keymap.set('n', '<leader>gr', telescope.lsp_references, opts)
+                vim.keymap.set('n', '<leader>gs', vim.lsp.buf.signature_help, opts)
+                vim.keymap.set('n', '<leader>cr', vim.lsp.buf.rename, opts)
+                vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
             end
 
             lsp_zero.extend_lspconfig({
@@ -108,8 +118,6 @@ return {
             require('mason-lspconfig').setup({
                 ensure_installed = {},
                 handlers = {
-                    -- this first function is the "default handler"
-                    -- it applies to every language server without a "custom handler"
                     function(server_name)
                         require('lspconfig')[server_name].setup({})
                     end,
