@@ -57,6 +57,8 @@ vim.keymap.set("n", "<leader>w", "", { noremap = true, silent = false, desc = "W
 vim.keymap.set("n", "<leader>ws", "<Cmd>split<CR>", { noremap = true, silent = false, desc = "Split by -" })
 vim.keymap.set("n", "<leader>wv", "<Cmd>vsplit<CR>", { noremap = true, silent = false, desc = "Split by |" })
 
+vim.keymap.set('t', '<leader><Esc>', '<C-\\><C-n>', { noremap = true, silent = true })
+
 -- Disable arrow keys (including with Shift) I hate this behavior.
 local modes = { "n", "i", "v" }
 local arrows = { "Up", "Down", "Left", "Right" }
