@@ -104,6 +104,12 @@ return {
                 vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
             end
 
+            local capabilities = require("cmp_nvim_lsp").default_capabilities()
+            capabilities.textDocument.foldingRange = {
+                dynamicRegistration = false,
+                lineFoldingOnly = true
+            }
+
             lsp_zero.extend_lspconfig({
                 sign_text = {
                     error = '✘',
@@ -112,7 +118,7 @@ return {
                     info = '»',
                 },
                 lsp_attach = lsp_attach,
-                capabilities = require('cmp_nvim_lsp').default_capabilities()
+                capabilities = capabilities
             })
 
             require('mason-lspconfig').setup({

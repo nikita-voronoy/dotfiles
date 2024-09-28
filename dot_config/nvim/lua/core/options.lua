@@ -13,10 +13,22 @@ vim.opt.pumheight = 8
 vim.o.pumwidth = 40
 vim.o.ignorecase = true
 vim.o.showmatch = true
-vim.o.scrolloff = 10
+vim.o.scrolloff = 3
+vim.o.sidescrolloff = 3
+vim.o.updatetime = 50
 vim.o.shiftwidth = 4
 vim.o.expandtab = true
 vim.o.fileformat = 'unix'
+vim.wo.foldmethod = 'expr'
+vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+-- vim.o.foldcolumn = '0'
+-- vim.o.foldlevel = 99
+-- vim.o.foldlevelstart = 99
+-- vim.o.foldenable = true
+-- vim.o.foldmethod = "syntax"
+--
+-- -- Настройка fillchars для отображения точек при сворачивании
+vim.opt.fillchars = { fold = ' ' } -- Заменить на пробел, чтобы убрать заполнение
 
 --#region Rust
 -- Rust: rustaceanvim plugin setup
@@ -40,10 +52,10 @@ vim.g.rustaceanvim = {
 --#endregion
 
 
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-    pattern = "*",
-    command = "set fileformat=unix"
-})
+-- vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+--     pattern = "*",
+--     command = "set fileformat=unix"
+-- })
 
 -- Move line like IDE Shift+<KJ>
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { noremap = true, silent = true })
