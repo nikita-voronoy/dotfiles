@@ -1,0 +1,7 @@
+window.startup_mode = "Maximized"
+font.normal.family = "JetBrainsMono Nerd Font"
+font.size = 16
+window.padding.y = 0
+window.padding.x = 0
+
+terminal.shell = { program = "zellij", args = ["attach", "--create"] }
