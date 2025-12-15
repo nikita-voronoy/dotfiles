@@ -14,4 +14,12 @@ return {
 	keys = {
 		{ "<leader>lg", "<cmd>LazyGit<cr>", desc = "LazyGit" },
 	},
+	config = function()
+		vim.api.nvim_create_autocmd("TermOpen", {
+			pattern = "*lazygit*",
+			callback = function()
+				vim.opt_local.mouse = ""
+			end,
+		})
+	end,
 }

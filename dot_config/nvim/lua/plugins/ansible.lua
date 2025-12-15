@@ -1,6 +1,6 @@
 return {
 	"mfussenegger/nvim-ansible",
-	ft = {},
+	ft = { "yaml.ansible" },
 	keys = {
 		{
 			"<leader>ta",

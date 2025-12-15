@@ -11,8 +11,22 @@ return {
 	---@module "neo-tree"
 	---@type neotree.Config?
 	opts = {
-		-- fill any relevant options here
-		-- popup_border_style = "single"
 		close_if_last_window = true,
+		window = {
+			mappings = {
+				["d"] = "delete",
+				["q"] = "close_window",
+			},
+		},
+		filesystem = {
+			follow_current_file = { enabled = true },
+			filtered_items = { visible = true },
+			use_libuv_file_watcher = true,
+			window = {
+				mappings = {
+					["d"] = "delete",
+				},
+			},
+		},
 	},
 }

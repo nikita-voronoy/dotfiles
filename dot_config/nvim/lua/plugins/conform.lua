@@ -3,14 +3,7 @@ return {
 	config = function()
 		require("conform").setup({
 			formatters_by_ft = {
-				go = {
-					"gofmt",
-					"goimports",
-					"golines",
-					"gofumpt",
-					"gci",
-					"impl",
-				},
+				go = { "goimports", "gofumpt" },
 				-- cpp = { "clang_format" },
 				make = { "checkmake" },
 				lua = { "stylua" },
@@ -32,7 +25,7 @@ return {
 			},
 
 			format_on_save = {
-				timeout_ms = 500,
+				timeout_ms = 1000,
 				lsp_fallback = true,
 			},
 
